@@ -1,0 +1,17 @@
+<Paper>
+  <Menu style={this.menuStyle}>
+    <MenuItem primaryText="Maps" />
+    <MenuItem primaryText="Books" />
+    <MenuItem primaryText="Flights" />
+    <MenuItem primaryText="Apps" />
+  </Menu>
+</Paper>
+
+
+<div style={this.state.items.item1} >
+  <NavMenu />
+</div>
+
+
+
+<img src={require('./image.jpg')} style={{'width':'50%'}}alt="the pic"/>

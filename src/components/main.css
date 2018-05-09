@@ -1,0 +1,66 @@
+.body{
+  margin: 2%;
+  float: left;
+  width: 100%;
+  /* background-color: pink; */
+  margin-top: 0px;
+}
+
+.body2{
+  /* position:absolute; */
+  /* top:0; */
+}
+
+
+.footer-links {
+  display: inline;
+  text-decoration: none;
+}
+
+
+.footer {
+  /* margin: 3%; */
+  padding:2%;
+  /* background-color: grey !important; */
+}
+
+.search-box {
+  background-color: green;
+  border-radius: 10px;
+  border-color: black;
+}
+
+
+.column {
+    float: left;
+    width: 50%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.navbar{
+  /* background-color: yellow; */
+}
+
+.tab{
+    background-color: pink !important;
+    margin:0!important;
+    padding:0!important;
+    border:0!important;
+}
+
+.rent{
+  margin:0!important;
+  padding:0!important;
+  background: white;
+  width: 100%;
+}
+
+.top-bar{
+  background-color: rgba(0,0,0,0.05) !important;
+}
