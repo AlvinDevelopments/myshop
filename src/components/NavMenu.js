@@ -38,6 +38,13 @@ class NavMenu extends Component {
         <div className="row">
           <div className="column">
             <ul>
+              <li style={{linkDecoration:'none',listStyleType:'none'}}><a href='#'>Shop New Arrivals</a></li>
+              <li style={{linkDecoration:'none',listStyleType:'none'}}><a href='#'>Shop Spring Denim</a></li>
+              <li style={{linkDecoration:'none',listStyleType:'none'}}><a href='#'>Shop Spring Shirts</a></li>
+            </ul>
+          </div>
+          <div className="column">
+            <ul>
               {
                 this.state.categories.map((item)=><li style={{linkDecoration:'none',listStyleType:'none'}}><a href={item.link}>{item.name}</a></li>)
               }

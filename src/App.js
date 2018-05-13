@@ -7,6 +7,12 @@ import Body from './components/Body.js';
 
 
 class App extends Component {
+
+  componentDidMount() {
+
+  }
+
+
   render() {
     return (
       <div className="App">

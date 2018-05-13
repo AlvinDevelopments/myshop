@@ -15,3 +15,44 @@
 
 
 <img src={require('./image.jpg')} style={{'width':'50%'}}alt="the pic"/>
+
+
+
+
+<Tab
+onMouseEnter={(event) => this.handleMouseEnter(0,event)}
+label="Home" />
+<Tab
+onMouseEnter={(event) => this.handleMouseEnter(1,event)}
+onMouseLeave={(event)=>this.handleMouseLeave(1,event)}
+label="Mens" />
+<Tab
+onMouseEnter={(event) => this.handleMouseEnter(2,event)}
+onMouseLeave={(event)=>this.handleMouseLeave(2,event)}
+label="Womens" />
+<Tab
+onMouseEnter={(event) => this.handleMouseEnter(3,event)}
+onMouseLeave={(event)=>this.handleMouseLeave(3,event)}
+label="Follow Us" />
+<Tab
+onMouseEnter={(event) => this.handleMouseEnter(4,event)}
+onMouseLeave={(event)=>this.handleMouseLeave(4,event)}
+label="About Us" />
+
+
+
+
+<div className="row">
+  <div className="column">
+    <Item
+    name="swag"
+    price="12.00"
+    description="this is dope af!!!"/>
+  </div>
+  <div className="column">
+    <Item />
+  </div>
+  <div className="column">
+    <Item />
+  </div>
+</div>

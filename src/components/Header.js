@@ -21,6 +21,10 @@ import ActionSearch from 'material-ui/svg-icons/action/search';
 
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
+import CurrencySelector from './CurrencySelector.js';
+
+
+import Cart from './Cart';
 
 
 
@@ -45,23 +49,15 @@ const stylesTab = {
 };
 
 
+const leftButtons = (
+  <div>
+    <CurrencySelector />
+    <Cart />
+  </div>
+);
 
 const rightButtons = (
-  <div>
-      <FlatButton label="About" />
-      <FlatButton label="Home" />
-      <br/>
-      <form style={{align: 'right', position: 'relative', display: 'inline-block'}}>
-        <TextField
-          hintText="Search"
-          icon
-        />
-
-        <IconButton style={{position: 'absolute', right: 0}} disabled={false}>
-          <ActionSearch />
-        </IconButton>
-      </form>
-  </div>
+  <SearchInput />
 );
 
 const styles= {
@@ -102,22 +98,10 @@ class Header extends Component {
     super();
     this.state = {
       buttons: [],
-      value: 1,
+      value: 3,
 
     };
 
-    this.leftButtons = (
-      <div>
-        SELECT CURRENCY
-        <DropDownMenu value={this.state.value} onChange={this.handleChange}>
-          <MenuItem value={1} primaryText="USD" />
-          <MenuItem value={2} primaryText="CAD" />
-          <MenuItem value={3} primaryText="EUR" />
-          <MenuItem value={4} primaryText="GBP" />
-          <MenuItem value={5} primaryText="AUD" />
-        </DropDownMenu>
-      </div>
-    );
 
   }
 
@@ -130,24 +114,17 @@ class Header extends Component {
   }
 
 
-
-
   render(){
 
     return (
-      <MuiThemeProvider  muiTheme={getMuiTheme(myTheme)}>
+      <MuiThemeProvider muiTheme={getMuiTheme(myTheme)}>
 
           <AppBar className="top-bar"
-          iconElementLeft={this.leftButtons}
+          iconElementLeft={leftButtons}
           iconElementRight={rightButtons}
-
           />
 
-          <MainNav
-          title={<img src={logo} className="App-logo" alt="logo" />}
-          titleStyle={
-            {height:'100'}
-          }/>
+          <MainNav />
 
       </MuiThemeProvider>
 

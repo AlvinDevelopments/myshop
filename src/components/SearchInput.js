@@ -3,6 +3,13 @@ import logo from './logo.svg';
 import './main.css';
 
 
+
+import IconButton from 'material-ui/IconButton';
+import TextField from 'material-ui/TextField';
+import ActionSearch from 'material-ui/svg-icons/action/search';
+
+
+
 class SearchInput extends Component {
 
   constructor(props){
@@ -38,14 +45,19 @@ class SearchInput extends Component {
 
   render(){
 
-    console.log(this.state);
     return (
-        <form onSubmit={this.onSubmit}>
-          <div className="search-box">
-            <input value={this.state.term} onClick={this.onClick} onChange={this.onChange} />
-            <button>Search</button>
-          </div>
-        </form>
+      <div>
+          <form style={{align: 'right', position: 'relative', display: 'inline-block'}}>
+            <TextField
+              hintText="Search"
+              icon
+            />
+
+            <IconButton style={{position: 'absolute', right: 0}} disabled={false}>
+              <ActionSearch />
+            </IconButton>
+          </form>
+      </div>
 
 
     )

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import SearchInput from './SearchInput.js';
 
+
 import AppBar from 'material-ui/AppBar';
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import {
@@ -95,7 +96,8 @@ class MainNav extends Component {
         }],
       style:{
         'backgroundColor':'white',
-      }
+      },
+      currentBody:(<Body category="mens" color="white" />),
     };
   }
 
@@ -122,7 +124,7 @@ class MainNav extends Component {
     });
 
     // event.target.style = style;
-    this.setState({items:styles});
+    // this.setState({items:styles});
 
   }
 
@@ -139,7 +141,6 @@ class MainNav extends Component {
   }
 
   closeAll = (event)=>{
-    console.log('closing all!!');
     let styles = this.state.items.slice();
     styles.forEach(function(element){
         styles[styles.indexOf(element)] = {
@@ -179,40 +180,41 @@ class MainNav extends Component {
   render(){
     return (
 
-
       <div onMouseLeave={this.closeAll}
       className="navbar">
       <h1>S H O P</h1>
-      <img src={logo} className="App-logo" alt="logo" />
       <MuiThemeProvider muiTheme={getMuiTheme(navTheme)}>
 
-
         <div>
-          <Tabs
-          initialSelectedIndex={0}>
 
-            <Tab
-            onMouseEnter={(event) => this.handleMouseEnter(0,event)}
-            label="Home" />
+        <Tabs
+        initialSelectedIndex={0}>
 
-            <Tab
-            onMouseEnter={(event) => this.handleMouseEnter(1,event)}
+          <Tab
+          onMouseEnter={(event) => this.handleMouseEnter(0,event)}
+          onMouseDown={(event)=> {this.setState({currentBody:(<Body category="home"  />)})}}
+          label="Home" />
 
-            label="Mens" />
-            <Tab
-            onMouseEnter={(event) => this.handleMouseEnter(2,event)}
+          <Tab
+          onMouseEnter={(event) => this.handleMouseEnter(1,event)}
+          onMouseDown={(event)=> {this.setState({currentBody:(<Body category="mens" />)})}}
+          label="Mens" />
+          <Tab
+          onMouseEnter={(event) => this.handleMouseEnter(2,event)}
+          onMouseDown={(event)=> {this.setState({currentBody:(<Body category="womens"  />)})}}
 
-            label="Womens" />
-            <Tab
-            onMouseEnter={(event) => this.handleMouseEnter(3,event)}
+          label="Womens" />
+          <Tab
+          onMouseEnter={(event) => this.handleMouseEnter(3,event)}
+          onMouseDown={(event)=> {this.setState({currentBody:(<Body category="follow" />)})}}
+          label="Follow Us" />
 
-            label="Follow Us" />
-            <Tab
-            onMouseEnter={(event) => this.handleMouseEnter(4,event)}
+          <Tab
+          onMouseEnter={(event) => this.handleMouseEnter(4,event)}
+          onMouseDown={(event)=> {this.setState({currentBody:(<Body category="about"  />)})}}
+          label="About Us" />
 
-            label="About Us" />
-
-          </Tabs>
+        </Tabs>
 
           <div style={this.state.items[0]}
           onMouseLeave={(event)=>this.handleMouseLeave(0,event)}
@@ -228,7 +230,6 @@ class MainNav extends Component {
           onMouseLeave={(event)=>this.handleMouseLeave(1,event)}>
             <NavMenu
             designers={[
-
               {name:'Aime Leon Dore',link:'#'},
               {name:'Arc\'teryx Veilance',link:'#'},
               {name:'Baxter of California',link:'#'},
@@ -291,7 +292,9 @@ class MainNav extends Component {
 
         </div>
 
-        <Body />
+        {
+          this.state.currentBody
+        }
 
       </MuiThemeProvider>
       </div>

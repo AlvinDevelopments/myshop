@@ -33,7 +33,7 @@
 
 .column {
     float: left;
-    width: 50%;
+    width: 33.333%;
 }
 
 /* Clear floats after the columns */
@@ -63,4 +63,14 @@
 
 .top-bar{
   background-color: rgba(0,0,0,0.05) !important;
+}
+
+
+.item-list{
+  display:inline;
+}
+
+.cart-window{
+  padding:5%;
+  margin: 10%;
 }
