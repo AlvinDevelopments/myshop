@@ -9,7 +9,9 @@ import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 
 import IconButton from 'material-ui/IconButton';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
+import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {Tabs, Tab} from 'material-ui/Tabs';
@@ -22,9 +24,12 @@ import ActionSearch from 'material-ui/svg-icons/action/search';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import CurrencySelector from './CurrencySelector.js';
+import Body from './Body';
 
 
 import Cart from './Cart';
+
+import PostForm from './PostForm';
 
 
 
@@ -50,15 +55,12 @@ const stylesTab = {
 
 
 const leftButtons = (
-  <div>
+  <div style={{display:'inline'}}>
     <CurrencySelector />
-    <Cart />
   </div>
 );
 
-const rightButtons = (
-  <SearchInput />
-);
+
 
 const styles= {
   title: {
@@ -99,10 +101,8 @@ class Header extends Component {
     this.state = {
       buttons: [],
       value: 3,
-
+      postBox: false,
     };
-
-
   }
 
   componentDidMount(){
@@ -113,27 +113,72 @@ class Header extends Component {
     alert('onClick triggered on the title component');
   }
 
+  postOpen = () =>{
+    this.setState({postBox:true});
+    console.log('state changed');
+  };
+
+
+    postClose = () =>{
+      this.setState({postBox:false});
+      console.log('state changed');
+    };
+
+
+
+  rightButtons = (
+    <div>
+        <SearchInput />
+        <FlatButton onClick={this.postOpen}>Post</FlatButton>
+        <FlatButton onClick="#"><a style ={{textDecoration:'none'}} href='/login'>Login</a></FlatButton>
+    </div>
+  );
+
 
   render(){
 
-    return (
-      <MuiThemeProvider muiTheme={getMuiTheme(myTheme)}>
+    if(false){
+      this.rightButtons = (<div><SearchInput/><FlatButton onClick={this.postOpen}>Post</FlatButton></div>);
+    }
+    else{
+      this.rightButtons = (<div><SearchInput/><FlatButton onClick="#"><a style ={{textDecoration:'none'}} href='/login'>Login</a></FlatButton></div>);
+    }
 
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        onClick={this.postClose}
+      />,
+      <FlatButton
+        label="Submit"
+        primary={true}
+        disabled={true}
+        onClick={this.state.open}
+      />,
+    ];
+
+    return (
+      <div className="header">
+      <MuiThemeProvider muiTheme={getMuiTheme(myTheme)}>
           <AppBar className="top-bar"
           iconElementLeft={leftButtons}
-          iconElementRight={rightButtons}
-          />
+          iconElementRight={this.rightButtons}
+          icon={(<SearchInput/>)}
+          >
 
-          <MainNav />
+          </AppBar>
+
+          <PostForm open={this.state.postBox} />
+
 
       </MuiThemeProvider>
+      </div>
 
 
-    )
+    );
 
   }
-
-
 }
 
 export default Header;

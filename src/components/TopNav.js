@@ -13,9 +13,7 @@ class TopNav extends Component {
     this.state = {
       isLoggedIn:false,
       style:{
-
         'align':'right'
-
       }
     };
   }

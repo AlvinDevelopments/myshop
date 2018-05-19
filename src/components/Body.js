@@ -1,6 +1,17 @@
 import  React, {Component} from 'react';
 import './main.css';
 import Item from './Item.js';
+import Drawer from 'material-ui/Drawer';
+import MenuItem from 'material-ui/MenuItem';
+import RaisedButton from 'material-ui/RaisedButton';
+
+import Divider from 'material-ui/Divider';
+
+import SearchResults from './SearchResults';
+import { BrowserRouter } from 'react-router-dom';
+import { HashRouter, Route, Switch } from 'react-router-dom';
+import LoginPage from './LoginPage';
+import SignupPage from'./SignupPage';
 
 
 class Body extends Component {
@@ -19,7 +30,7 @@ class Body extends Component {
   componentDidMount(){
     console.log('MOUNTED');
     // console.log(this.state.items);
-    fetch('/'+this.props.category,{
+    fetch('/all',{
       method: 'GET',
       headers: {
         "Accept": "application/json"
@@ -54,25 +65,15 @@ class Body extends Component {
   render(){
 
     return (
+      <Switch>
+      <Route path='/login' component={LoginPage}/>
+{      // <Route path='/search' component={LocalResults}/>
+}        <Route exact path='/search' component={SearchResults}/>
+         <Route exact path='/signup' component={SignupPage}/>
 
-      <div style={{backgroundColor:this.props.color}} className="body2">
-        <div className="row">
-          {
-            this.state.items.map((item)=>
-            <div className="column">
-              <Item
-                name={item.name}
-                price={item.price}
-                description={item.description}
-                size={item.size}
-              />
-            </div>
-            )
-          }
-        </div>
+{        // <Route path='/groups' component={Groups}/>
+}      </Switch>
 
-
-      </div>
     )
   }
 

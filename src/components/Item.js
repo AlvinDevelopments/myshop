@@ -3,6 +3,13 @@ import React, {Component} from 'react';
 import { instanceOf } from 'prop-types';
 import cookie from 'react-cookie';
 
+
+import IconButton from 'material-ui/IconButton';
+import TextField from 'material-ui/TextField';
+import ActionMessage from 'material-ui/svg-icons/communication/message';
+
+
+
 class Item extends Component{
 
 
@@ -36,12 +43,15 @@ class Item extends Component{
   render(){
 
     return(
-      <div className="item-list">
-        <h1>{this.state.name}</h1>
-        <h2>{this.state.price}</h2>
-        <h2>{this.state.description}</h2>
-        <h2>{this.state.images}</h2>
-        <button onMouseDown={this.handleMouseDown}>Add to cart</button>
+      <div style={this.props.style, {width:'100%'}} className="item-list">
+        <h3>{this.state.name}</h3>
+        <h4>{this.state.price}</h4>
+        <h4>{this.state.description}</h4>
+        <h4>{this.state.images}</h4>
+        Message
+        <IconButton style={{}} disabled={false}>
+          <ActionMessage />
+        </IconButton>
       </div>
     );
   }
