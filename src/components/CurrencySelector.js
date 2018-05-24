@@ -10,12 +10,15 @@ class CurrencySelector extends Component{
   constructor(props){
     super(props);
     this.state = {
-      value: 1,
+      valueOfArea: 1,
+      valueOfProvince: 1,
+      valueOfCategory: 1,
     }
   }
 
-
-  handleChange = (event, index, value) => this.setState({value});
+  handleChangeArea = (event, index, value) => this.setState({valueOfArea:value});
+  handleChangeCategory = (event, index, value) => this.setState({valueOfCategory:value});
+  handleChangeProvince = (event, index, value) => this.setState({valueOfProvince:value});
 
 
   render(){
@@ -23,16 +26,7 @@ class CurrencySelector extends Component{
     return (
       <div style={{display:'inline'}}>
         PROVINCE
-        <DropDownMenu value={this.state.value} onChange={this.handleChange}>
-          <MenuItem value={1} primaryText="AB" />
-          <MenuItem value={2} primaryText="BC" />
-          <MenuItem value={3} primaryText="MB" />
-          <MenuItem value={4} primaryText="SK" />
-          <MenuItem value={5} primaryText="ON" />
-        </DropDownMenu>
-
-        AREA
-        <DropDownMenu value={this.state.value} onChange={this.handleChange}>
+        <DropDownMenu value={this.state.valueOfProvince} onChange={this.handleChangeProv}>
           <MenuItem value={1} primaryText="AB" />
           <MenuItem value={2} primaryText="BC" />
           <MenuItem value={3} primaryText="MB" />
@@ -41,12 +35,12 @@ class CurrencySelector extends Component{
         </DropDownMenu>
 
         CATEGORY
-        <DropDownMenu value={this.state.value} onChange={this.handleChange}>
-          <MenuItem value={1} primaryText="AB" />
-          <MenuItem value={2} primaryText="BC" />
-          <MenuItem value={3} primaryText="MB" />
-          <MenuItem value={4} primaryText="SK" />
-          <MenuItem value={5} primaryText="ON" />
+        <DropDownMenu value={this.state.valueOfCategory} onChange={this.handleChangeCategory}>
+          <MenuItem value={1} primaryText="All Ads" />
+          <MenuItem value={2} primaryText="Buy and Sell" />
+          <MenuItem value={3} primaryText="Services" />
+          <MenuItem value={4} primaryText="Cars" />
+          <MenuItem value={5} primaryText="Jobs" />
         </DropDownMenu>
 
 

@@ -18,6 +18,7 @@ class SearchResults extends Component {
     super(props);
     this.state={
       yo:true,
+      searchTerm:this.props.location.search.split('?')[1],
       backgroundColor:this.props.color,
       items: [],
       category: this.props.category,
@@ -25,6 +26,7 @@ class SearchResults extends Component {
 }
 
   componentDidMount(){
+    console.log(this.state.searchTerm);
     console.log('MOUNTED');
     // console.log(this.state.items);
     fetch('/all',{
@@ -41,22 +43,39 @@ class SearchResults extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot){
+    console.log(this.state);
   }
 
   componentWillReceiveProps(nextProps){
     console.log('received props.');
-    this.setState({items:[]});
-    fetch('/'+nextProps.category,{
-      method: 'GET',
-      headers: {
-        "Accept": "application/json"
-      }
-    })
-    .then(response => response.json())
-    .then(json => {
-      this.setState({items:json});
-      // console.log(json);
-    });
+    this.setState({items:[], searchTerm:nextProps.location.search.split('?')[1]});
+
+    if(nextProps.location.search.split('?')[1]===undefined){
+      fetch('/all',{
+        method: 'GET',
+        headers: {
+          "Accept": "application/json"
+        }
+      })
+      .then(response => response.json())
+      .then(json => {
+        this.setState({items:json});
+        // console.log(json);
+      });
+    }
+    else{
+      fetch('/search?query='+nextProps.location.search.split('?')[1],{
+        method: 'GET',
+        headers: {
+          "Accept": "application/json"
+        }
+      })
+      .then(response => response.json())
+      .then(json => {
+        this.setState({items:json});
+        // console.log(json);
+      });
+    }
   }
 
   render(){

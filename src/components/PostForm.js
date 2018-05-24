@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
 import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 
 
+import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 
 import SelectField from 'material-ui/SelectField';
@@ -29,10 +29,10 @@ class PostForm extends Component{
   }
 
 
-  postOpen = () =>{
-    this.setState({open:true});
-    console.log('state changed');
-  };
+    postOpen = () =>{
+      this.setState({open:true});
+      console.log('state changed');
+    };
 
 
     postClose = () =>{

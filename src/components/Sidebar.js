@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 
+import Divider from 'material-ui/Divider';
+
 class Sidebar extends Component{
 
   constructor(props){
@@ -24,9 +26,10 @@ class Sidebar extends Component{
 
 
     return (
+      // sidebar div
       <div className="side-bar">
 
-        Category
+        // Categories
         <RadioButtonGroup name="shipSpeed" defaultSelected="electronics">
           <RadioButton
             value="clothing"
@@ -45,9 +48,12 @@ class Sidebar extends Component{
           />
       </RadioButtonGroup>
 
+      <Divider/>
       Location
 
+      <Divider/>
       Distance
+
 
     </div>
     );

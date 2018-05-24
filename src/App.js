@@ -5,9 +5,14 @@ import Header from './components/Header.js';
 import Footer from './components/Footer.js';
 import Body from './components/Body.js';
 import Sidebar from './components/Sidebar.js';
+import LoginPage from'./components/LoginPage';
+import SignupPage from'./components/SignupPage';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+
+import { BrowserRouter } from 'react-router-dom';
+import { HashRouter, Route, Switch } from 'react-router-dom';
 
 import {
   cyan500, cyan700,
@@ -48,9 +53,13 @@ class App extends Component {
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(myTheme)}>
         <div className="App">
-          <Header/>
+            <Header />
           <div className="body">
-            <Sidebar/>
+            <Switch>
+                <Route path='/login' component={LoginPage}/>
+                <Route path='/posts' component={Sidebar}/>
+                <Route exact path='/signup' component={SignupPage}/>
+            </Switch>
             <Body/>
           </div>
         </div>

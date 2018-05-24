@@ -31,6 +31,9 @@ import Cart from './Cart';
 
 import PostForm from './PostForm';
 
+import { BrowserRouter } from 'react-router-dom';
+import { HashRouter, Route, Switch } from 'react-router-dom';
+import {PrivateRoute, auth} from './PrivateRoute';
 
 
 import {
@@ -128,21 +131,37 @@ class Header extends Component {
 
   rightButtons = (
     <div>
-        <SearchInput />
-        <FlatButton onClick={this.postOpen}>Post</FlatButton>
-        <FlatButton onClick="#"><a style ={{textDecoration:'none'}} href='/login'>Login</a></FlatButton>
     </div>
   );
 
 
   render(){
 
-    if(false){
-      this.rightButtons = (<div><SearchInput/><FlatButton onClick={this.postOpen}>Post</FlatButton></div>);
+    let rightLinks = (
+
+      <div>
+        <FlatButton label="Home" href="/"/>
+        <FlatButton label="Buy and Sell" href="posts"/>
+        <FlatButton label="login" href="/login" />
+      </div>
+  );
+
+    if(auth.isAuthenticated){
+      rightLinks = (  <div>
+          <FlatButton label="Home" href="/"/>
+          <FlatButton label="Buy and Sell" href="posts"/>
+          <FlatButton label="post" onClick={this.postOpen} />
+        </div>);
     }
     else{
-      this.rightButtons = (<div><SearchInput/><FlatButton onClick="#"><a style ={{textDecoration:'none'}} href='/login'>Login</a></FlatButton></div>);
+      rightLinks = (<div>
+        <FlatButton label="Home" href="/"/>
+        <FlatButton label="Buy and Sell" href="posts"/>
+        <FlatButton label="login" href="/login" />
+      </div>);
     }
+
+
 
     const actions = [
       <FlatButton
@@ -160,13 +179,17 @@ class Header extends Component {
 
     return (
       <div className="header">
+        <AppBar
+          iconElementLeft={<div/>}
+          iconElementRight={rightLinks}
+        >
+        </AppBar>
       <MuiThemeProvider muiTheme={getMuiTheme(myTheme)}>
           <AppBar className="top-bar"
           iconElementLeft={leftButtons}
           iconElementRight={this.rightButtons}
           icon={(<SearchInput/>)}
           >
-
           </AppBar>
 
           <PostForm open={this.state.postBox} />

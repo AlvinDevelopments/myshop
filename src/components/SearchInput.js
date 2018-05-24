@@ -9,6 +9,11 @@ import TextField from 'material-ui/TextField';
 import ActionSearch from 'material-ui/svg-icons/action/search';
 
 
+import { BrowserRouter } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
+import { withRouter } from "react-router-dom";
+
+
 
 class SearchInput extends Component {
 
@@ -16,7 +21,7 @@ class SearchInput extends Component {
     super(props);
     this.state = {
       isEmpty:true,
-      term:'Search'
+      term:''
     };
   }
 
@@ -27,7 +32,6 @@ class SearchInput extends Component {
   onChange = (event)=>{
     var status = false
     event.target.value !== '' ? status=false : status=true;
-
     this.setState({term:event.target.value, isEmpty:status});
 
   }
@@ -38,7 +42,11 @@ class SearchInput extends Component {
     }
   }
 
-  onSubmit(){
+  handleSubmit = (event) => {
+    event.preventDefault();
+    console.log('submitted');
+    this.props.history.push("/posts/"+"search?"+this.state.term);
+    // this.props.history.push("/foo");
 
   }
 
@@ -47,14 +55,14 @@ class SearchInput extends Component {
 
     return (
       <div>
-          <form style={{align: 'right', position: 'relative', display: 'inline-block'}}>
+          <form onSubmit={this.handleSubmit} style={{align: 'right', position: 'relative', display: 'inline-block'}}>
             <TextField
-              hintText="Search"
-              icon
+            onChange={e => this.setState({ term: e.target.value })}
             />
 
             <IconButton style={{position: 'absolute', right: 0}} disabled={false}>
-              <ActionSearch />
+              <ActionSearch
+              onClick={this.handleSubmit} />
             </IconButton>
           </form>
       </div>
@@ -67,4 +75,4 @@ class SearchInput extends Component {
 
 }
 
-export default SearchInput;
+export default withRouter(SearchInput);

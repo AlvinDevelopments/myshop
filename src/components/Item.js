@@ -19,7 +19,10 @@ class Item extends Component{
       name:props.name || 'no name',
       description:props.description || 'no description',
       price:props.price || '$0',
-      images: props.images || []
+      images: props.images || [],
+      province:'',
+      area:'',
+      category:'',
     };
   }
 

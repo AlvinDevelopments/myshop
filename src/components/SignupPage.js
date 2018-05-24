@@ -29,17 +29,26 @@ class SignupPage extends Component{
 
 
         const actions = [
-
           <FlatButton
-            label="Sign Up"
-            primary={true}
-            onClick={this.postClose}
-          />,
+              label="Login"
+              href="/login"
+              primary={true}
+              onClick={this.postClose}
+            />,
+            <FlatButton
+                label="Sign Up"
+                primary={true}
+                onClick={this.postClose}
+              />
         ];
 
     return (
 
       <div>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
       <br/>
       <br/>
       <br/>

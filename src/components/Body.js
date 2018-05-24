@@ -12,6 +12,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { HashRouter, Route, Switch } from 'react-router-dom';
 import LoginPage from './LoginPage';
 import SignupPage from'./SignupPage';
+import PrivateRoute from './PrivateRoute';
 
 
 class Body extends Component {
@@ -28,7 +29,7 @@ class Body extends Component {
 }
 
   componentDidMount(){
-    console.log('MOUNTED');
+    // console.log('MOUNTED');
     // console.log(this.state.items);
     fetch('/all',{
       method: 'GET',
@@ -47,7 +48,7 @@ class Body extends Component {
   }
 
   componentWillReceiveProps(nextProps){
-    console.log('received props.');
+    // console.log('received props.');
     this.setState({items:[]});
     fetch('/'+nextProps.category,{
       method: 'GET',
@@ -65,14 +66,12 @@ class Body extends Component {
   render(){
 
     return (
-      <Switch>
-      <Route path='/login' component={LoginPage}/>
-{      // <Route path='/search' component={LocalResults}/>
-}        <Route exact path='/search' component={SearchResults}/>
-         <Route exact path='/signup' component={SignupPage}/>
 
-{        // <Route path='/groups' component={Groups}/>
-}      </Switch>
+      <Switch>
+
+        <PrivateRoute exact path='/' component={SearchResults}/>
+        <Route path='/posts' component={SearchResults}/>
+      </Switch>
 
     )
   }
