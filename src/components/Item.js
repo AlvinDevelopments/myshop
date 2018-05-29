@@ -14,15 +14,20 @@ class Item extends Component{
 
 
   constructor(props){
+
     super(props);
     this.state= props.state || {
       name:props.name || 'no name',
       description:props.description || 'no description',
       price:props.price || '$0',
       images: props.images || [],
-      province:'',
-      area:'',
-      category:'',
+      province:props.province||'',
+      area:props.area||'',
+      category:props.category||'',
+      sellername:props.sellername||'',
+      sellerid:props.sellerid||'',
+      posttime:props.time|| '',
+
     };
   }
 
@@ -51,6 +56,10 @@ class Item extends Component{
         <h4>{this.state.price}</h4>
         <h4>{this.state.description}</h4>
         <h4>{this.state.images}</h4>
+        <h4>Posted {this.state.posttime}</h4>
+        <h4> Sold by <a href={'/user/'+this.state.sellerid}>{this.state.sellername}</a></h4>
+
+
         Message
         <IconButton style={{}} disabled={false}>
           <ActionMessage />

@@ -23,43 +23,18 @@ import {
 
 import {fade} from 'material-ui/utils/colorManipulator';
 
-const myTheme = getMuiTheme({
-  // palette: {
-  //   primary1Color: white,
-  //   primary2Color: white,
-  //   primary3Color: white,
-  //   accent1Color: white,
-  //   accent2Color: grey100,
-  //   accent3Color: grey500,
-  //   textColor: darkBlack,
-  //   alternateTextColor: black,
-  //   canvasColor: white,
-  //   borderColor: grey300,
-  //   disabledColor: fade(darkBlack, 0.3),
-  //   pickerHeaderColor: cyan500,
-  //   clockCircleColor: fade(darkBlack, 0.07),
-  //   shadowColor: fullBlack,
-  // },
-});
-
 
 class App extends Component {
 
   componentDidMount() {
   }
 
-
   render() {
     return (
-      <MuiThemeProvider muiTheme={getMuiTheme(myTheme)}>
+      <MuiThemeProvider>
         <div className="App">
-            <Header />
+            <Header/>
           <div className="body">
-            <Switch>
-                <Route path='/login' component={LoginPage}/>
-                <Route path='/posts' component={Sidebar}/>
-                <Route exact path='/signup' component={SignupPage}/>
-            </Switch>
             <Body/>
           </div>
         </div>

@@ -13,6 +13,8 @@ import { HashRouter, Route, Switch } from 'react-router-dom';
 import LoginPage from './LoginPage';
 import SignupPage from'./SignupPage';
 import PrivateRoute from './PrivateRoute';
+import Home from './Home';
+import Profile from './Profile';
 
 
 class Body extends Component {
@@ -64,15 +66,14 @@ class Body extends Component {
   }
 
   render(){
-
     return (
-
       <Switch>
-
-        <PrivateRoute exact path='/' component={SearchResults}/>
+        <Route exact path='/' component={Home}/>
+        <PrivateRoute exact path='/profile' component={Profile}/>
         <Route path='/posts' component={SearchResults}/>
+        <Route path='/login' component={LoginPage}/>
+        <Route exact path='/signup' component={SignupPage}/>
       </Switch>
-
     )
   }
 

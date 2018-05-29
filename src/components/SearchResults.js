@@ -26,28 +26,42 @@ class SearchResults extends Component {
 }
 
   componentDidMount(){
-    console.log(this.state.searchTerm);
-    console.log('MOUNTED');
     // console.log(this.state.items);
-    fetch('/all',{
-      method: 'GET',
-      headers: {
-        "Accept": "application/json"
-      }
-    })
-    .then(response => response.json())
-    .then(json => {
-      this.setState({items:json});
-      // console.log(json);
-    });
+    // console.log(this.props.location.searchTerm);
+    if(this.props.location.searchTerm!==''){
+      fetch('/search?query='+this.props.location.searchTerm,{
+        method: 'GET',
+        headers: {
+          "Accept": "application/json"
+        }
+      })
+      .then(response => response.json())
+      .then(json => {
+        this.setState({items:json});
+        // console.log(json);
+      });
+    }
+    else{
+      fetch('/all',{
+        method: 'GET',
+        headers: {
+          "Accept": "application/json"
+        }
+      })
+      .then(response => response.json())
+      .then(json => {
+        this.setState({items:json});
+        console.log(json);
+      });
+    }
   }
 
   componentDidUpdate(prevProps, prevState, snapshot){
-    console.log(this.state);
+    // console.log(this.state);
   }
 
   componentWillReceiveProps(nextProps){
-    console.log('received props.');
+    // console.log('received props.');
     this.setState({items:[], searchTerm:nextProps.location.search.split('?')[1]});
 
     if(nextProps.location.search.split('?')[1]===undefined){
@@ -82,11 +96,21 @@ class SearchResults extends Component {
 
     return (
       <div className="body2">
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
               {
                 this.state.items.reverse().map((item)=>
                   <div>
                     <Item style={{float:'left'}}
                       name={item.name}
+                      sellerid= 'bob'
+                      sellername = {item.user}
                       price={item.price}
                       description={item.description}
                       size={item.size}

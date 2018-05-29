@@ -14,6 +14,7 @@ import {PrivateRoute, auth} from './PrivateRoute';
 
 import { withRouter } from "react-router-dom";
 
+import cookie from 'react-cookie';
 
 import './main.css';
 class LoginPage extends Component{
@@ -24,8 +25,11 @@ class LoginPage extends Component{
     this.state = {
       username:'',
       password:'',
+      email:'',
       usererror:false,
       passworderror:false,
+      loginerror:false,
+      errormsg:'',
     }
   }
 
@@ -35,7 +39,7 @@ class LoginPage extends Component{
 
     event.preventDefault();
 
-    if(this.state.username===''){
+    if(this.state.email===''){
       this.setState({usererror:true});
     }
     else{
@@ -54,36 +58,32 @@ class LoginPage extends Component{
     // }
 
 
-    fetch('/login',{
+    fetch('/api/login',{
       method: 'POST',
       headers: {
         "Accept": "application/json",
         'Content-Type': 'application/json'
       },
       body:JSON.stringify({
-        username:this.state.username,
+        email:this.state.email,
         password:this.state.password
       }),
       })
-    .then(response => response.json())
-    .then(json => {
-      console.log('authenticate');
-      // auth.authenticate();
-      // this.props.history.push('/');
-      // console.log(json);
-      // this.setState({
-      //   username:'',
-      //   password:'',
-      //   usererror:false,
-      //   passworderror:false,
-      // });
+    .then((response)=>{
+      if(response.ok){
+        let json = response.json();
+        json.then(function(result){
+          // console.log(result);
+          cookie.save('token',result,{path:'/'});
+        });
+        cookie.save('auth',true,{path:'/'});
+        auth.authenticate();
+        this.props.history.push('/');
+      }
+      else{
+        this.setState({loginerror:true, errormsg:'failed'});
+      }
     });
-
-    auth.authenticate();
-    this.props.history.push('/');
-
-
-
   };
 
 
@@ -91,6 +91,7 @@ class LoginPage extends Component{
 
     let userError = <p></p>;
     let passwordError = <p></p>;
+    let loginError = <p></p>;
 
     if(this.state.usererror===true){
       userError = <p>ERROR</p>;
@@ -98,6 +99,10 @@ class LoginPage extends Component{
 
     if(this.state.passworderror===true){
       passwordError = <p>ERROR</p>;
+    }
+
+    if(this.state.loginerror===true){
+      loginError = <p>{this.state.errormsg}</p>;
     }
 
 
@@ -129,11 +134,11 @@ class LoginPage extends Component{
         <form onSubmit={this.handleSubmit}>
 
           <TextField type='text'
-          name="username"
-          floatingLabelText="Email address or username"
+          name="email"
+          floatingLabelText="Email address"
           multiLine={false}
           rows={1}
-          onChange={e => this.setState({ username: e.target.value })}
+          onChange={e => this.setState({ email: e.target.value })}
           /><br />
 
           {userError}
@@ -149,7 +154,7 @@ class LoginPage extends Component{
 
           {passwordError}
 
-
+          {loginError}
           {actions}
           <br/>
           <FlatButton

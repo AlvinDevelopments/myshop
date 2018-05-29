@@ -8,9 +8,10 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 import Divider from 'material-ui/Divider';
 
+import cookie from 'react-cookie';
 
 
-class Home extends Component {
+class Profile extends Component {
 
 
   constructor(props){
@@ -22,10 +23,27 @@ class Home extends Component {
       backgroundColor:this.props.color,
       items: [],
       category: this.props.category,
+      user:''
   }
 }
 
   componentDidMount(){
+
+    var token = 'Bearer '+cookie.load('token').token;
+    console.log(token);
+    fetch('/api/profile',{
+      method: 'GET',
+      headers: {
+        "Accept": "application/json",
+        'Content-Type': 'application/json',
+        'Authorization': token
+      },
+      })
+      .then(response => response.json())
+      .then(json => {
+        console.log(json.firstname);
+        this.setState({user:json});
+      });
   }
 
   componentDidUpdate(prevProps, prevState, snapshot){
@@ -35,6 +53,7 @@ class Home extends Component {
   }
 
   render(){
+
 
     return (
       <div className="">
@@ -46,8 +65,7 @@ class Home extends Component {
       <br/>
       <br/>
       <br/>
-            welcome to homepage
-
+            Welcome, {this.state.user.firstname}
         </div>
 
     )
@@ -56,4 +74,4 @@ class Home extends Component {
 
 }
 
-export default Home;
+export default Profile;

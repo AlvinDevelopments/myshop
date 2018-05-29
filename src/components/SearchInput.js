@@ -13,6 +13,9 @@ import { BrowserRouter } from 'react-router-dom';
 import { Route, Switch } from 'react-router-dom';
 import { withRouter } from "react-router-dom";
 
+import DropDownMenu from 'material-ui/DropDownMenu';
+import MenuItem from 'material-ui/MenuItem';
+
 
 
 class SearchInput extends Component {
@@ -21,13 +24,21 @@ class SearchInput extends Component {
     super(props);
     this.state = {
       isEmpty:true,
-      term:''
+      term:'',
+      valueOfArea: 1,
+      valueOfProvince: 1,
+      valueOfCategory: 1,
     };
   }
 
   componentDidMount(){
 
   }
+
+  handleChangeArea = (event, index, value) => this.setState({valueOfArea:value});
+  handleChangeCategory = (event, index, value) => this.setState({valueOfCategory:value});
+  handleChangeProvince = (event, index, value) => this.setState({valueOfProvince:value});
+
 
   onChange = (event)=>{
     var status = false
@@ -55,8 +66,31 @@ class SearchInput extends Component {
 
     return (
       <div>
+
+      PROVINCE
+      <DropDownMenu value={this.state.valueOfProvince} onChange={this.handleChangeProv}>
+        <MenuItem value={1} primaryText="AB" />
+        <MenuItem value={2} primaryText="BC" />
+        <MenuItem value={3} primaryText="MB" />
+        <MenuItem value={4} primaryText="SK" />
+        <MenuItem value={5} primaryText="ON" />
+      </DropDownMenu>
+
+      CATEGORY
+      <DropDownMenu value={this.state.valueOfCategory} onChange={this.handleChangeCategory}>
+        <MenuItem value={1} primaryText="All Ads" />
+        <MenuItem value={2} primaryText="Buy and Sell" />
+        <MenuItem value={3} primaryText="Services" />
+        <MenuItem value={4} primaryText="Cars" />
+        <MenuItem value={5} primaryText="Jobs" />
+      </DropDownMenu>
+
+
+
           <form onSubmit={this.handleSubmit} style={{align: 'right', position: 'relative', display: 'inline-block'}}>
             <TextField
+            defaultValue = {this.props.location.search.split('?')[1]}
+            hintText = 'Search'
             onChange={e => this.setState({ term: e.target.value })}
             />
 

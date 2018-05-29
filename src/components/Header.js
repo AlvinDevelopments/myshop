@@ -20,20 +20,19 @@ import Slider from 'material-ui/Slider';
 import TextField from 'material-ui/TextField';
 import ActionSearch from 'material-ui/svg-icons/action/search';
 
-
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
-import CurrencySelector from './CurrencySelector.js';
 import Body from './Body';
-
-
-import Cart from './Cart';
 
 import PostForm from './PostForm';
 
 import { BrowserRouter } from 'react-router-dom';
 import { HashRouter, Route, Switch } from 'react-router-dom';
 import {PrivateRoute, auth} from './PrivateRoute';
+
+import cookie from 'react-cookie';
+
+import { withRouter } from "react-router-dom";
 
 
 import {
@@ -46,7 +45,6 @@ import {
 import {fade} from 'material-ui/utils/colorManipulator';
 
 
-
 const stylesTab = {
   headline: {
     fontSize: 24,
@@ -55,15 +53,6 @@ const stylesTab = {
     fontWeight: 400,
   },
 };
-
-
-const leftButtons = (
-  <div style={{display:'inline'}}>
-    <CurrencySelector />
-  </div>
-);
-
-
 
 const styles= {
   title: {
@@ -127,10 +116,17 @@ class Header extends Component {
       console.log('state changed');
     };
 
+    logout = () => {
+      cookie.save('auth',false,{path:'/'});
+      auth.signout();
+      this.props.history.push('/');
+    }
+
 
 
   rightButtons = (
     <div>
+      <SearchInput />
     </div>
   );
 
@@ -138,7 +134,6 @@ class Header extends Component {
   render(){
 
     let rightLinks = (
-
       <div>
         <FlatButton label="Home" href="/"/>
         <FlatButton label="Buy and Sell" href="posts"/>
@@ -148,17 +143,12 @@ class Header extends Component {
 
     if(auth.isAuthenticated){
       rightLinks = (  <div>
+          <FlatButton label="Post" onClick={this.postOpen}/>
+          <FlatButton label="Profile" href="/profile"/>
           <FlatButton label="Home" href="/"/>
           <FlatButton label="Buy and Sell" href="posts"/>
-          <FlatButton label="post" onClick={this.postOpen} />
+          <FlatButton label="Logout" onClick={this.logout} />
         </div>);
-    }
-    else{
-      rightLinks = (<div>
-        <FlatButton label="Home" href="/"/>
-        <FlatButton label="Buy and Sell" href="posts"/>
-        <FlatButton label="login" href="/login" />
-      </div>);
     }
 
 
@@ -180,22 +170,19 @@ class Header extends Component {
     return (
       <div className="header">
         <AppBar
-          iconElementLeft={<div/>}
           iconElementRight={rightLinks}
+          iconElementLeft={<div/>}
         >
         </AppBar>
-      <MuiThemeProvider muiTheme={getMuiTheme(myTheme)}>
-          <AppBar className="top-bar"
-          iconElementLeft={leftButtons}
-          iconElementRight={this.rightButtons}
-          icon={(<SearchInput/>)}
-          >
-          </AppBar>
+        <MuiThemeProvider>
+            <AppBar className="top-bar"
+            iconElementRight={this.rightButtons}
+            >
+            </AppBar>
 
-          <PostForm open={this.state.postBox} />
+            <PostForm open={this.state.postBox} />
 
-
-      </MuiThemeProvider>
+        </MuiThemeProvider>
       </div>
 
 
@@ -204,4 +191,4 @@ class Header extends Component {
   }
 }
 
-export default Header;
+export default withRouter(Header);

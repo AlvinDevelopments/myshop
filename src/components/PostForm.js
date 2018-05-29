@@ -9,6 +9,7 @@ import TextField from 'material-ui/TextField';
 
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import cookie from 'react-cookie';
 
 
 class PostForm extends Component{
@@ -21,13 +22,31 @@ class PostForm extends Component{
       categories: [(<MenuItem value='0' key='0' primaryText="Buy and Sell" />)],
       value: 0,
       postname: '',
-      price: 0,
+      price: '',
       category: '',
-      description: ''
+      description: '',
+      user:''
     };
 
   }
 
+  // componentDidMount(){
+  //   var token = 'Bearer '+cookie.load('token').token;
+  //
+  //   fetch('/api/profile',{
+  //     method: 'GET',
+  //     headers: {
+  //       "Accept": "application/json",
+  //       'Content-Type': 'application/json',
+  //       'Authorization': token
+  //     },
+  //     })
+  //     .then(response => response.json())
+  //     .then(json => {
+  //       console.log(json.firstname);
+  //       this.setState({user:json});
+  //     });
+  // }
 
     postOpen = () =>{
       this.setState({open:true});
@@ -54,29 +73,52 @@ class PostForm extends Component{
     handleSubmit = (event) => {
       event.preventDefault();
 
+      var token = "Bearer "+cookie.load('token').token;
+      console.log(token);
+
+      if(isNaN(this.state.price)){
+        console.log('invalid price');
+      }
+      else if(this.state.postname === ''){
+        console.log('must contain title');
+      }
+      else{
+
+        // console.log('attempting to post');
+        // console.log('the token is');
+        // console.log(cookie.load('token'));
+
+        fetch('/api/postitem', {
+          method: "POST",
+          headers: {
+            'mode': 'no-cors',
+            "Accept": "application/json",
+            'Content-Type': 'application/json',
+            'Authorization': token
+          },
+          body:JSON.stringify({
+            postname:this.state.postname,
+            price:this.state.price,
+            category:this.state.category,
+            description:this.state.description,
+          }),
+        }).
+        then((response) => {
+          if(response.ok){
+            console.log('response ok');
+          }
+        });
+
+        this.setState({
+          postname:'',
+          price:0,
+          category:'',
+          description:'',
+          open:false
+        });
+      }
 
 
-      fetch('/postitem', {
-        method: "POST",
-        headers: {
-          "Accept": "application/json",
-          'Content-Type': 'application/json'
-        },
-        body:JSON.stringify({
-          postname:this.state.postname,
-          price:this.state.price,
-          category:this.state.category,
-          description:this.state.description
-        }),
-      });
-
-      this.setState({
-        postname:'',
-        price:0,
-        category:'',
-        description:'',
-        open:false
-      });
 
     };
 
@@ -100,7 +142,7 @@ class PostForm extends Component{
 
     return (
       <Dialog
-      title="Dialog With Actions"
+      title="Post an item"
       modal={true}
       open={this.state.open}
       >
@@ -139,10 +181,11 @@ class PostForm extends Component{
         onChange={e => this.setState({ description: e.target.value })}
         /><br />
 
+        <input type="file" onChange={this.fileChangedHandler}/>
+
         {actions}
 
       </form>
-
 
     </Dialog>
     )
